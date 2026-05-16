@@ -3,9 +3,12 @@ import React, {
   useContext,
   useState,
   useCallback,
+  useEffect,
+  useRef,
   ReactNode,
 } from "react";
 import { CartItem, Product } from "./types";
+import { syncCartWithApi } from "./cartService";
 
 interface CartContextValue {
   items: CartItem[];
@@ -14,6 +17,7 @@ interface CartContextValue {
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
+  isSyncing: boolean;
 }
 
 const CONTEXT_KEY = "__TECHSTORE_CART_CONTEXT__";
@@ -30,6 +34,34 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    if (items.length === 0) return;
+
+    debounceRef.current = setTimeout(async () => {
+      setIsSyncing(true);
+      try {
+        await syncCartWithApi(items);
+      } catch {
+      } finally {
+        setIsSyncing(false);
+      }
+    }, 600);
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [items]);
 
   const addItem = useCallback((product: Product) => {
     setItems((prev) => {
@@ -66,7 +98,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, isSyncing }}>
       {children}
     </CartContext.Provider>
   );

@@ -9,6 +9,7 @@ declare module "shell/CartContext" {
     updateQuantity: (productId: number, quantity: number) => void;
     clearCart: () => void;
     totalItems: number;
+    isSyncing: boolean;
   }
 
   export const CartProvider: React.FC<{ children: ReactNode }>;

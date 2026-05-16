@@ -112,6 +112,21 @@
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-modal__syncing {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-accent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 .cart-modal__close {

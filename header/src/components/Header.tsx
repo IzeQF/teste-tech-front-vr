@@ -5,7 +5,7 @@ import "./Header.css";
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { items, removeItem, updateQuantity, clearCart, totalItems } = useCart();
+  const { items, removeItem, updateQuantity, clearCart, totalItems, isSyncing } = useCart();
 
   const formatPrice = (price: number) =>
     price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -64,7 +64,10 @@ const Header: React.FC = () => {
         >
           <div className="cart-modal" role="dialog" aria-label="Carrinho de compras">
             <div className="cart-modal__header">
-              <h2 className="cart-modal__title">Minha Sacola</h2>
+              <h2 className="cart-modal__title">
+                Minha Sacola
+                {isSyncing && <span className="cart-modal__syncing">● sincronizando...</span>}
+              </h2>
               <button
                 className="cart-modal__close"
                 onClick={() => setIsOpen(false)}
