@@ -4,6 +4,7 @@ import "./Header.css";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { items, removeItem, updateQuantity, clearCart, totalItems } = useCart();
 
   const formatPrice = (price: number) =>
@@ -21,8 +22,19 @@ const Header: React.FC = () => {
           BellaStore
         </a>
 
-        <nav>
-          <ul className="header__nav">
+        <button
+          className={`header__menu-btn${menuOpen ? " header__menu-btn--open" : ""}`}
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label="Abrir menu"
+          aria-expanded={menuOpen}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <nav className={`header__nav-wrapper${menuOpen ? " header__nav-wrapper--open" : ""}`}>
+          <ul className="header__nav" onClick={() => setMenuOpen(false)}>
             <li><a href="/" className="header__nav-link">Início</a></li>
             <li><a href="#produtos" className="header__nav-link">Produtos</a></li>
             <li><a href="#contato" className="header__nav-link">Contato</a></li>

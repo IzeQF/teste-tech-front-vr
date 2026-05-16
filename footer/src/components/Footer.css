@@ -35,6 +35,12 @@
   color: var(--color-white);
 }
 
+@media (max-width: 768px) {
+  .footer {
+    padding: 20px 16px;
+  }
+}
+
 @media (max-width: 560px) {
   .footer__inner {
     flex-direction: column;
