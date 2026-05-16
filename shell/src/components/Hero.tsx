@@ -4,9 +4,9 @@ import "./Hero.css";
 const Hero: React.FC = () => {
   return (
     <section className="hero">
-      <h1 className="hero__title">Tecnologia que inspira</h1>
+      <h1 className="hero__title">Beleza e conforto para o seu dia a dia</h1>
       <p className="hero__subtitle">
-        Descubra os melhores produtos de tecnologia com preços incríveis.
+        Maquiagem, cama, mesa e banho com qualidade e preço que você merece.
       </p>
     </section>
   );

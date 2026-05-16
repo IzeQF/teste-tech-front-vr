@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer__inner">
         <p className="footer__copy">
-          &copy; {currentYear} TechStore. Todos os direitos reservados.
+          &copy; {currentYear} BellaStore. Todos os direitos reservados.
         </p>
         <nav className="footer__links">
           <a href="#termos" className="footer__link">Termos</a>
