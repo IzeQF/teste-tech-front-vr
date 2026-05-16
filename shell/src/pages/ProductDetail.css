@@ -214,6 +214,18 @@
   cursor: not-allowed;
 }
 
+.detail__qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.detail__stock-limit {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #c0395a;
+  font-weight: 500;
+}
+
 .detail__qty-controls {
   display: flex;
   align-items: center;

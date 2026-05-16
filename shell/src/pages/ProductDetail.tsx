@@ -41,31 +41,33 @@ const ProductDetail: React.FC = () => {
     const full = Math.floor(rating);
     const half = rating - full >= 0.5;
     return (
-      <span className="detail__stars" title={`${rating.toFixed(1)} de 5`}>
-        {"★".repeat(full)}
-        {half ? "½" : ""}
-        {"☆".repeat(5 - full - (half ? 1 : 0))}
-        <span className="detail__rating-value"> {rating.toFixed(1)}</span>
+      <span className="detail__stars" aria-label={`Avaliação: ${rating.toFixed(1)} de 5`}>
+        <span aria-hidden="true">
+          {"★".repeat(full)}
+          {half ? "½" : ""}
+          {"☆".repeat(5 - full - (half ? 1 : 0))}
+        </span>
+        <span className="detail__rating-value" aria-hidden="true"> {rating.toFixed(1)}</span>
       </span>
     );
   };
 
   if (loading) {
     return (
-      <div className="detail__state">
-        <p>Carregando produto...</p>
-      </div>
+      <main className="detail__state">
+        <p role="status" aria-live="polite">Carregando produto...</p>
+      </main>
     );
   }
 
   if (error || !product) {
     return (
-      <div className="detail__state">
-        <p>{error || "Produto não encontrado."}</p>
+      <main className="detail__state">
+        <p role="alert">{error || "Produto não encontrado."}</p>
         <button className="detail__back-btn" onClick={() => navigate("/")}>
           ← Voltar
         </button>
-      </div>
+      </main>
     );
   }
 
@@ -76,7 +78,7 @@ const ProductDetail: React.FC = () => {
       : null;
 
   return (
-    <div className="detail">
+    <main className="detail">
       <button className="detail__back-btn" onClick={() => navigate("/")}>
         ← Voltar para produtos
       </button>
@@ -89,14 +91,16 @@ const ProductDetail: React.FC = () => {
             alt={product.title}
           />
           {images.length > 1 && (
-            <div className="detail__thumbnails">
+            <div className="detail__thumbnails" role="group" aria-label="Miniaturas do produto">
               {images.map((img, i) => (
                 <button
                   key={i}
                   className={`detail__thumb-btn${activeImage === i ? " detail__thumb-btn--active" : ""}`}
                   onClick={() => setActiveImage(i)}
+                  aria-label={`Ver imagem ${i + 1} de ${images.length}`}
+                  aria-pressed={activeImage === i}
                 >
-                  <img src={img} alt={`${product.title} ${i + 1}`} />
+                  <img src={img} alt="" aria-hidden="true" />
                 </button>
               ))}
             </div>
@@ -121,13 +125,13 @@ const ProductDetail: React.FC = () => {
           <div className="detail__price-block">
             {discountedPrice ? (
               <>
-                <span className="detail__price-original">
+                <span className="detail__price-original" aria-label={`Preço original: ${formatPrice(product.price)}`}>
                   {formatPrice(product.price)}
                 </span>
-                <span className="detail__price">
+                <span className="detail__price" aria-label={`Preço com desconto: ${formatPrice(discountedPrice)}`}>
                   {formatPrice(discountedPrice)}
                 </span>
-                <span className="detail__discount">
+                <span className="detail__discount" aria-label={`Desconto de ${product.discountPercentage!.toFixed(0)}%`}>
                   -{product.discountPercentage!.toFixed(0)}%
                 </span>
               </>
@@ -159,20 +163,26 @@ const ProductDetail: React.FC = () => {
                 Adicionar ao carrinho
               </button>
             ) : (
-              <div className="detail__qty-controls">
-                <button
-                  className="detail__qty-btn"
-                  onClick={() => updateQuantity(product.id, quantity - 1)}
-                  aria-label="Diminuir quantidade"
-                >−</button>
-                <span className="detail__qty-value">{quantity}</span>
-                <button
-                  className="detail__qty-btn"
-                  onClick={() => updateQuantity(product.id, quantity + 1)}
-                  aria-label="Aumentar quantidade"
-                >+</button>
-                <span className="detail__qty-label">no carrinho ✓</span>
-              </div>
+              <>
+                <div className="detail__qty-controls">
+                  <button
+                    className="detail__qty-btn"
+                    onClick={() => updateQuantity(product.id, quantity - 1)}
+                    aria-label="Diminuir quantidade"
+                  >−</button>
+                  <span className="detail__qty-value" aria-live="polite" aria-atomic="true" aria-label={`Quantidade: ${quantity}`}>{quantity}</span>
+                  <button
+                    className="detail__qty-btn"
+                    onClick={() => updateQuantity(product.id, quantity + 1)}
+                    aria-label="Aumentar quantidade"
+                    disabled={quantity >= product.stock}
+                  >+</button>
+                  <span className="detail__qty-label">no carrinho ✓</span>
+                </div>
+                {quantity >= product.stock && (
+                  <p className="detail__stock-limit" role="alert">Limite de estoque atingido ({product.stock} un.)</p>
+                )}
+              </>
             )}
           </div>
 
@@ -195,6 +205,20 @@ const ProductDetail: React.FC = () => {
                 <span>{product.returnPolicy}</span>
               </div>
             )}
+            {product.weight !== undefined && (
+              <div className="detail__extra-item">
+                <span className="detail__extra-label">Peso</span>
+                <span>{product.weight} kg</span>
+              </div>
+            )}
+            {product.dimensions && (
+              <div className="detail__extra-item">
+                <span className="detail__extra-label">Dimensões</span>
+                <span>
+                  {product.dimensions.width.toFixed(2)} × {product.dimensions.height.toFixed(2)} × {product.dimensions.depth.toFixed(2)} cm
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -204,21 +228,26 @@ const ProductDetail: React.FC = () => {
           <h2 className="detail__reviews-title">Avaliações dos clientes</h2>
           <div className="detail__reviews-list">
             {product.reviews.map((review, i) => (
-              <div key={i} className="detail__review-card">
+              <article key={i} className="detail__review-card" aria-label={`Avaliação de ${review.reviewerName}`}>
                 <div className="detail__review-header">
                   <span className="detail__reviewer">{review.reviewerName}</span>
-                  <span className="detail__review-stars">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
+                  <span
+                    className="detail__review-stars"
+                    aria-label={`${review.rating} de 5 estrelas`}
+                  >
+                    <span aria-hidden="true">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
+                  </span>
                 </div>
                 <p className="detail__review-comment">{review.comment}</p>
-                <span className="detail__review-date">
+                <time className="detail__review-date" dateTime={review.date}>
                   {new Date(review.date).toLocaleDateString("pt-BR")}
-                </span>
-              </div>
+                </time>
+              </article>
             ))}
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 
