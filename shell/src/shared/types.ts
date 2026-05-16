@@ -5,6 +5,12 @@ export interface ProductReview {
   reviewerName: string;
 }
 
+export interface ProductDimensions {
+  width: number;
+  height: number;
+  depth: number;
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -23,6 +29,8 @@ export interface Product {
   availabilityStatus?: string;
   returnPolicy?: string;
   reviews?: ProductReview[];
+  weight?: number;
+  dimensions?: ProductDimensions;
 }
 
 export interface CartItem {
