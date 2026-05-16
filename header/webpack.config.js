@@ -29,6 +29,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "header",
       filename: "remoteEntry.js",
+      remotes: {
+        shell: "shell@http://localhost:3000/remoteEntry.js",
+      },
       exposes: {
         "./Header": "./src/components/Header",
       },

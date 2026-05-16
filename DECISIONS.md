@@ -19,7 +19,7 @@
 | 1 | Setup do monorepo | `feat/setup-monorepo` | ✅ Concluída |
 | 2 | Bootstrap das aplicações React com Webpack + Module Federation | `feat/setup-monorepo` | ✅ Concluída |
 | 3 | Shell: integração dos microfrontends | `feat/setup-monorepo` | ✅ Concluída |
-| 4 | Módulo compartilhado: tipos e contexto do carrinho | `feat/shared-module` | 🔜 Próxima |
+| 4 | Módulo compartilhado: tipos e contexto do carrinho | `feat/shared-module` | ✅ Concluída |
 | 5 | Cards: listagem de produtos da API | `feat/cards-product-list` | ⏳ Pendente |
 | 6 | Header: modal com produtos do carrinho | `feat/header-cart-modal` | ⏳ Pendente |
 | 7 | Footer | `feat/footer` | ⏳ Pendente |

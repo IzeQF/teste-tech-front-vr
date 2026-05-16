@@ -1,0 +1,33 @@
+declare module "shell/CartContext" {
+  import { CartItem, Product } from "shell/types";
+  import { ReactNode } from "react";
+
+  interface CartContextValue {
+    items: CartItem[];
+    addItem: (product: Product) => void;
+    removeItem: (productId: number) => void;
+    clearCart: () => void;
+    totalItems: number;
+  }
+
+  export const CartProvider: React.FC<{ children: ReactNode }>;
+  export const useCart: () => CartContextValue;
+}
+
+declare module "shell/types" {
+  export interface Product {
+    id: number;
+    title: string;
+    price: number;
+    thumbnail: string;
+    description: string;
+    category: string;
+    rating: number;
+    stock: number;
+  }
+
+  export interface CartItem {
+    product: Product;
+    quantity: number;
+  }
+}
