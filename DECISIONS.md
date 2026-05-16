@@ -18,7 +18,7 @@
 |---|-----------|--------|--------|
 | 1 | Setup do monorepo | `feat/setup-monorepo` | ✅ Concluída |
 | 2 | Bootstrap das aplicações React com Webpack + Module Federation | `feat/setup-monorepo` | ✅ Concluída |
-| 3 | Shell: integração dos microfrontends | - | 🔜 Próxima |
+| 3 | Shell: integração dos microfrontends | `feat/setup-monorepo` | ✅ Concluída |
 | 4 | Cards: listagem de produtos (API) | - | ⏳ Pendente |
 | 5 | Estado compartilhado dos produtos selecionados | - | ⏳ Pendente |
 | 6 | Header: modal com produtos selecionados | - | ⏳ Pendente |
