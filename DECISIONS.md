@@ -19,13 +19,21 @@
 | 1 | Setup do monorepo | `feat/setup-monorepo` | ✅ Concluída |
 | 2 | Bootstrap das aplicações React com Webpack + Module Federation | `feat/setup-monorepo` | ✅ Concluída |
 | 3 | Shell: integração dos microfrontends | `feat/setup-monorepo` | ✅ Concluída |
-| 4 | Cards: listagem de produtos (API) | - | ⏳ Pendente |
-| 5 | Estado compartilhado dos produtos selecionados | - | ⏳ Pendente |
-| 6 | Header: modal com produtos selecionados | - | ⏳ Pendente |
-| 7 | Footer | - | ⏳ Pendente |
-| 8 | Responsividade | - | ⏳ Pendente |
-| 9 | Testes unitários | - | ⏳ Pendente |
-| 10 | README final | - | ⏳ Pendente |
+| 4 | Módulo compartilhado: tipos e contexto do carrinho | `feat/shared-module` | 🔜 Próxima |
+| 5 | Cards: listagem de produtos da API | `feat/cards-product-list` | ⏳ Pendente |
+| 6 | Header: modal com produtos do carrinho | `feat/header-cart-modal` | ⏳ Pendente |
+| 7 | Footer | `feat/footer` | ⏳ Pendente |
+| 8 | Responsividade | `feat/responsive-design` | ⏳ Pendente |
+| 9 | Testes unitários | `feat/tests` | ⏳ Pendente |
+| 10 | README final | `feat/docs` | ⏳ Pendente |
+
+---
+
+## Observações sobre o plano
+
+- **API de Cart** (`https://dummyjson.com/carts`) será usada na Task 4/5: ao adicionar produtos no Cards, o estado do carrinho é atualizado e o Header reflete isso via contexto compartilhado.
+- **Reaproveitamento de código** (critério do desafio): será atendido pelo módulo compartilhado com tipos TypeScript (`Product`, `CartItem`) e o `CartContext` acessível por todos os MFEs.
+- **Branches separadas por feature** a partir da Task 4, demonstrando organização e semântica de commits.
 
 ---
 
