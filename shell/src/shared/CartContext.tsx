@@ -11,11 +11,18 @@ interface CartContextValue {
   items: CartItem[];
   addItem: (product: Product) => void;
   removeItem: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
 }
 
-const CartContext = createContext<CartContextValue | undefined>(undefined);
+const CONTEXT_KEY = "__TECHSTORE_CART_CONTEXT__";
+
+if (!(window as any)[CONTEXT_KEY]) {
+  (window as any)[CONTEXT_KEY] = createContext<CartContextValue | undefined>(undefined);
+}
+
+const CartContext: React.Context<CartContextValue | undefined> = (window as any)[CONTEXT_KEY];
 
 interface CartProviderProps {
   children: ReactNode;
@@ -42,12 +49,24 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setItems((prev) => prev.filter((i) => i.product.id !== productId));
   }, []);
 
+  const updateQuantity = useCallback((productId: number, quantity: number) => {
+    if (quantity <= 0) {
+      setItems((prev) => prev.filter((i) => i.product.id !== productId));
+    } else {
+      setItems((prev) =>
+        prev.map((i) =>
+          i.product.id === productId ? { ...i, quantity } : i
+        )
+      );
+    }
+  }, []);
+
   const clearCart = useCallback(() => setItems([]), []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, totalItems }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems }}>
       {children}
     </CartContext.Provider>
   );

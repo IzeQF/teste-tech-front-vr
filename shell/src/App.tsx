@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from "react";
+import { CartProvider } from "./shared/CartContext";
 import Hero from "./components/Hero";
 
 const Header = lazy(() => import("header/Header"));
@@ -7,7 +8,7 @@ const Cards = lazy(() => import("cards/Cards"));
 
 const App: React.FC = () => {
   return (
-    <>
+    <CartProvider>
       <Suspense fallback={null}>
         <Header />
       </Suspense>
@@ -23,7 +24,7 @@ const App: React.FC = () => {
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
-    </>
+    </CartProvider>
   );
 };
 
