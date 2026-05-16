@@ -15,8 +15,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const formatPrice = (price: number) =>
     price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
+  const handleCardClick = () => {
+    window.location.href = `/product/${product.id}`;
+  };
+
+  const handleAddClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addItem(product);
+  };
+
   return (
-    <article className="product-card">
+    <article
+      className="product-card"
+      onClick={handleCardClick}
+      style={{ cursor: "pointer" }}
+    >
       <img
         className="product-card__image"
         src={product.thumbnail}
@@ -28,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <span className="product-card__price">{formatPrice(product.price)}</span>
         <button
           className={`product-card__button${quantity > 0 ? " product-card__button--added" : ""}`}
-          onClick={() => addItem(product)}
+          onClick={handleAddClick}
         >
           {quantity > 0 ? `Adicionado (${quantity}) ✓` : "Adicionar"}
         </button>
