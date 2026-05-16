@@ -219,6 +219,11 @@
   background: #ddd;
 }
 
+.cart-item__qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .cart-item__qty-value {
   font-size: 0.9rem;
   font-weight: 600;

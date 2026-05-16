@@ -25,15 +25,20 @@ const Header: React.FC = () => {
         <button
           className={`header__menu-btn${menuOpen ? " header__menu-btn--open" : ""}`}
           onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Abrir menu"
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
+          aria-controls="main-nav"
         >
-          <span />
-          <span />
-          <span />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </button>
 
-        <nav className={`header__nav-wrapper${menuOpen ? " header__nav-wrapper--open" : ""}`}>
+        <nav
+          id="main-nav"
+          aria-label="Navegação principal"
+          className={`header__nav-wrapper${menuOpen ? " header__nav-wrapper--open" : ""}`}
+        >
           <ul className="header__nav" onClick={() => setMenuOpen(false)}>
             <li><a href="/" className="header__nav-link">Início</a></li>
             <li><a href="#produtos" className="header__nav-link">Produtos</a></li>
@@ -44,15 +49,15 @@ const Header: React.FC = () => {
         <button
           className="header__cart-btn"
           onClick={() => setIsOpen(true)}
-          aria-label="Abrir carrinho"
+          aria-label={`Abrir carrinho${totalItems > 0 ? `, ${totalItems} ${totalItems === 1 ? "item" : "itens"}` : ""}`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
             <line x1="3" y1="6" x2="21" y2="6" />
             <path d="M16 10a4 4 0 01-8 0" />
           </svg>
           {totalItems > 0 && (
-            <span className="header__cart-badge">{totalItems}</span>
+            <span className="header__cart-badge" aria-hidden="true">{totalItems}</span>
           )}
         </button>
       </header>
@@ -62,11 +67,11 @@ const Header: React.FC = () => {
           className="cart-modal-overlay"
           onClick={(e) => e.target === e.currentTarget && setIsOpen(false)}
         >
-          <div className="cart-modal" role="dialog" aria-label="Carrinho de compras">
+          <div className="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title">
             <div className="cart-modal__header">
-              <h2 className="cart-modal__title">
+              <h2 className="cart-modal__title" id="cart-modal-title">
                 Minha Sacola
-                {isSyncing && <span className="cart-modal__syncing">● sincronizando...</span>}
+                {isSyncing && <span className="cart-modal__syncing" aria-live="polite" aria-label="Sincronizando carrinho">● sincronizando...</span>}
               </h2>
               <button
                 className="cart-modal__close"
@@ -107,18 +112,20 @@ const Header: React.FC = () => {
                           }}
                           aria-label="Diminuir quantidade"
                         >−</button>
-                        <span className="cart-item__qty-value">{item.quantity}</span>
+                        <span className="cart-item__qty-value" aria-label={`quantidade: ${item.quantity}`}>{item.quantity}</span>
                         <button
                           className="cart-item__qty-btn"
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                           aria-label="Aumentar quantidade"
+                          disabled={item.product.stock !== undefined && item.quantity >= item.product.stock}
+                          title={item.product.stock !== undefined && item.quantity >= item.product.stock ? `Estoque máximo: ${item.product.stock} un.` : undefined}
                         >+</button>
                       </div>
                     </div>
                     <button
                       className="cart-item__remove"
                       onClick={() => removeItem(item.product.id)}
-                      aria-label={`Remover ${item.product.title}`}
+                      aria-label={`Remover ${item.product.title} do carrinho`}
                     >
                       ✕
                     </button>
