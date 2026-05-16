@@ -24,7 +24,7 @@
 | 6 | Header: modal com produtos do carrinho | `feat/header-cart-modal` | ✅ Concluída |
 | 7 | Footer | `feat/footer` | ✅ Concluída |
 | 8 | Responsividade | `feat/responsive-design` | ✅ Concluída |
-| 9 | Testes unitários | `feat/tests` | ⏳ Pendente |
+| 9 | Testes unitários | `feat/tests` | ✅ Concluída |
 | 10 | README final | `feat/docs` | ⏳ Pendente |
 
 ---
