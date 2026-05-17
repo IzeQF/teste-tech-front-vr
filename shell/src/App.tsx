@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from "react";
+import Hero from "./components/Hero";
 
 const Header = lazy(() => import("header/Header"));
 const Footer = lazy(() => import("footer/Footer"));
@@ -10,6 +11,8 @@ const App: React.FC = () => {
       <Suspense fallback={null}>
         <Header />
       </Suspense>
+
+      <Hero />
 
       <main>
         <Suspense fallback={null}>
