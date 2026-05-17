@@ -1,0 +1,13 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm start --prefix header\" \"npm start --prefix footer\" \"npm start --prefix cards\" \"npm start --prefix shell\"",
+    "build": "concurrently \"npm run build --prefix header\" \"npm run build --prefix footer\" \"npm run build --prefix cards\" \"npm run build --prefix shell\"",
+    "test": "concurrently \"npm test --prefix header\" \"npm test --prefix footer\" \"npm test --prefix cards\" \"npm test --prefix shell\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
