@@ -4,7 +4,7 @@ import "./Header.css";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { items, removeItem, clearCart, totalItems } = useCart();
+  const { items, removeItem, updateQuantity, clearCart, totalItems } = useCart();
 
   const formatPrice = (price: number) =>
     price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
     <>
       <header className="header">
         <a href="/" className="header__logo">
-          TechStore
+          BellaStore
         </a>
 
         <nav>
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
         >
           <div className="cart-modal" role="dialog" aria-label="Carrinho de compras">
             <div className="cart-modal__header">
-              <h2 className="cart-modal__title">Meu Carrinho</h2>
+              <h2 className="cart-modal__title">Minha Sacola</h2>
               <button
                 className="cart-modal__close"
                 onClick={() => setIsOpen(false)}
@@ -78,7 +78,27 @@ const Header: React.FC = () => {
                       <p className="cart-item__price">
                         {formatPrice(item.product.price)}
                       </p>
-                      <p className="cart-item__qty">Qtd: {item.quantity}</p>
+                      <div className="cart-item__qty-controls">
+                        <button
+                          className="cart-item__qty-btn"
+                          onClick={() => {
+                            if (item.quantity === 1) {
+                              if (window.confirm(`Remover "${item.product.title}" da sacola?`)) {
+                                updateQuantity(item.product.id, 0);
+                              }
+                            } else {
+                              updateQuantity(item.product.id, item.quantity - 1);
+                            }
+                          }}
+                          aria-label="Diminuir quantidade"
+                        >−</button>
+                        <span className="cart-item__qty-value">{item.quantity}</span>
+                        <button
+                          className="cart-item__qty-btn"
+                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                          aria-label="Aumentar quantidade"
+                        >+</button>
+                      </div>
                     </div>
                     <button
                       className="cart-item__remove"

@@ -22,7 +22,7 @@
 | 4 | Módulo compartilhado: tipos e contexto do carrinho | `feat/shared-module` | ✅ Concluída |
 | 5 | Cards: listagem de produtos da API | `feat/cards-product-list` | ✅ Concluída |
 | 6 | Header: modal com produtos do carrinho | `feat/header-cart-modal` | ✅ Concluída |
-| 7 | Footer | `feat/footer` | ⏳ Pendente |
+| 7 | Footer | `feat/footer` | ✅ Concluída |
 | 8 | Responsividade | `feat/responsive-design` | ⏳ Pendente |
 | 9 | Testes unitários | `feat/tests` | ⏳ Pendente |
 | 10 | README final | `feat/docs` | ⏳ Pendente |
