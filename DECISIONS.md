@@ -25,7 +25,7 @@
 | 7 | Footer | `feat/footer` | ✅ Concluída |
 | 8 | Responsividade | `feat/responsive-design` | ✅ Concluída |
 | 9 | Testes unitários | `feat/tests` | ✅ Concluída |
-| 10 | README final | `feat/docs` | ⏳ Pendente |
+| 10 | README final | `feat/docs` | ✅ Concluída |
 
 ---
 
