@@ -7,6 +7,7 @@ export const useCart = jest.fn().mockReturnValue({
   updateQuantity: jest.fn(),
   clearCart: jest.fn(),
   totalItems: 0,
+  isSyncing: false,
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => (
