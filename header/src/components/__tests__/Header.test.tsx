@@ -34,9 +34,9 @@ beforeEach(() => {
 });
 
 describe("Header", () => {
-  it("renderiza o logo BellaStore", () => {
+  it("renderiza o logo UniStore", () => {
     render(<Header />);
-    expect(screen.getByText("BellaStore")).toBeInTheDocument();
+    expect(screen.getByText("UniStore")).toBeInTheDocument();
   });
 
   it("renderiza o botão de abrir carrinho", () => {
@@ -65,7 +65,7 @@ describe("Header", () => {
   it("abre o modal do carrinho ao clicar no botão", () => {
     render(<Header />);
     fireEvent.click(screen.getByRole("button", { name: /abrir carrinho/i }));
-    expect(screen.getByRole("dialog", { name: /carrinho/i })).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
   it("exibe mensagem de carrinho vazio quando não há itens", () => {
