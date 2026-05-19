@@ -1,6 +1,6 @@
 {
   "name": "monorepo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "start": "concurrently \"npm start --prefix header\" \"npm start --prefix footer\" \"npm start --prefix cards\" \"npm start --prefix shell\"",
