@@ -16,3 +16,27 @@
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.75);
 }
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 48px 20px;
+  }
+
+  .hero__title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 36px 16px;
+  }
+
+  .hero__title {
+    font-size: 1.4rem;
+  }
+
+  .hero__subtitle {
+    font-size: 0.9rem;
+  }
+}

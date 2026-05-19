@@ -95,8 +95,32 @@
   }
 }
 
+@media (max-width: 768px) {
+  .cards-grid {
+    padding: 32px 16px;
+  }
+
+  .cards-grid__title {
+    font-size: 1.4rem;
+    margin-bottom: 24px;
+  }
+
+  .product-card__image {
+    height: 180px;
+  }
+}
+
 @media (max-width: 560px) {
   .cards-grid__list {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cards-grid {
+    padding: 24px 12px;
+  }
+
+  .product-card__image {
+    height: 200px;
   }
 }
