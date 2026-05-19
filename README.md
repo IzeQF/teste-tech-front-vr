@@ -1,4 +1,4 @@
-# UniStore — Micro Frontend com Module Federation
+# BellaStore — Micro Frontend com Module Federation
 
 Aplicação de e-commerce desenvolvida como desafio técnico, utilizando arquitetura **Micro Frontend** com **Webpack Module Federation**.
 

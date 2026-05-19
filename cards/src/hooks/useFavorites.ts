@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-const STORAGE_KEY = "unistore_favorites";
+const STORAGE_KEY = "bellastore_favorites";
 
 function loadFavorites(): Set<number> {
   try {

@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     <>
       <header className="header">
         <a href="/" className="header__logo">
-          UniStore
+          BellaStore
         </a>
 
         <button

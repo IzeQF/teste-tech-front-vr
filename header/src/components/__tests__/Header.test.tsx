@@ -34,9 +34,9 @@ beforeEach(() => {
 });
 
 describe("Header", () => {
-  it("renderiza o logo UniStore", () => {
+  it("renderiza o logo BellaStore", () => {
     render(<Header />);
-    expect(screen.getByText("UniStore")).toBeInTheDocument();
+    expect(screen.getByText("BellaStore")).toBeInTheDocument();
   });
 
   it("renderiza o botão de abrir carrinho", () => {
