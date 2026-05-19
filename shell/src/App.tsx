@@ -1,22 +1,19 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./shared/CartContext";
-import Hero from "./components/Hero";
+import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 
 const Header = lazy(() => import("header/Header"));
 const Footer = lazy(() => import("footer/Footer"));
 const Cards = lazy(() => import("cards/Cards"));
 
-const Home: React.FC = () => (
-  <>
-    <Hero />
-    <main>
-      <Suspense fallback={null}>
-        <Cards />
-      </Suspense>
-    </main>
-  </>
+const Produtos: React.FC = () => (
+  <main>
+    <Suspense fallback={null}>
+      <Cards />
+    </Suspense>
+  </main>
 );
 
 const App: React.FC = () => {
@@ -29,7 +26,8 @@ const App: React.FC = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/produtos" element={<Produtos />} />
+          <Route path="/produto/:id" element={<ProductDetail />} />
         </Routes>
 
         <Suspense fallback={null}>
