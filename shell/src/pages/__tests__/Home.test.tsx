@@ -49,11 +49,11 @@ describe("Home", () => {
     expect(screen.getByTestId("hero")).toBeInTheDocument();
   });
 
-  it("renderiza os dois carrosséis", () => {
+  it("renderiza os 6 carrosséis (1 desconto + 5 grupos)", () => {
     (global.fetch as jest.Mock).mockReturnValue(new Promise(() => {}));
     render(<Home />);
     const carousels = screen.getAllByTestId("carousel");
-    expect(carousels).toHaveLength(2);
+    expect(carousels).toHaveLength(6);
   });
 
   it("exibe carrossel de Maiores Descontos", () => {
@@ -62,13 +62,17 @@ describe("Home", () => {
     expect(screen.getByText("🔥 Maiores Descontos")).toBeInTheDocument();
   });
 
-  it("exibe carrossel de Tecnologia", () => {
+  it("exibe todos os títulos de grupo", () => {
     (global.fetch as jest.Mock).mockReturnValue(new Promise(() => {}));
     render(<Home />);
+    expect(screen.getByText("👗 Moda & Acessórios")).toBeInTheDocument();
     expect(screen.getByText("📱 Tecnologia")).toBeInTheDocument();
+    expect(screen.getByText("🏠 Casa & Decoração")).toBeInTheDocument();
+    expect(screen.getByText("💄 Beleza & Cuidados")).toBeInTheDocument();
+    expect(screen.getByText("🏋️ Esportes & Veículos")).toBeInTheDocument();
   });
 
-  it("busca produtos com desconto e os ordena por desconto decrescente", async () => {
+  it("busca produtos com desconto", async () => {
     const allProducts = [
       makeProduct(1, 5),
       makeProduct(2, 30),
@@ -83,14 +87,13 @@ describe("Home", () => {
     render(<Home />);
 
     await waitFor(() => {
-      // fetch must have been called (discounts + 4 tech categories)
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining("dummyjson.com/products?")
       );
     });
   });
 
-  it("busca as 4 categorias de tecnologia", async () => {
+  it("busca categorias de todos os grupos", async () => {
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({ products: [] }),
@@ -100,10 +103,18 @@ describe("Home", () => {
 
     await waitFor(() => {
       const calls = (global.fetch as jest.Mock).mock.calls.map(([url]) => url as string);
+      // Tecnologia
       expect(calls.some((u) => u.includes("/category/smartphones"))).toBe(true);
-      expect(calls.some((u) => u.includes("/category/tablets"))).toBe(true);
       expect(calls.some((u) => u.includes("/category/laptops"))).toBe(true);
-      expect(calls.some((u) => u.includes("/category/mobile-accessories"))).toBe(true);
+      // Moda
+      expect(calls.some((u) => u.includes("/category/mens-shirts"))).toBe(true);
+      expect(calls.some((u) => u.includes("/category/womens-dresses"))).toBe(true);
+      // Casa
+      expect(calls.some((u) => u.includes("/category/furniture"))).toBe(true);
+      // Beleza
+      expect(calls.some((u) => u.includes("/category/beauty"))).toBe(true);
+      // Esportes
+      expect(calls.some((u) => u.includes("/category/sports-accessories"))).toBe(true);
     });
   });
 });
