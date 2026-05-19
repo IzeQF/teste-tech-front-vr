@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./shared/CartContext";
 import Hero from "./components/Hero";
 import ProductDetail from "./pages/ProductDetail";
+import Contact from "./pages/Contact";
 
 const Header = lazy(() => import("header/Header"));
 const Footer = lazy(() => import("footer/Footer"));
@@ -30,6 +31,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/contato" element={<Contact />} />
         </Routes>
 
         <Suspense fallback={null}>

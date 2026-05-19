@@ -42,7 +42,7 @@ const Header: React.FC = () => {
           <ul className="header__nav" onClick={() => setMenuOpen(false)}>
             <li><a href="/" className="header__nav-link">Início</a></li>
             <li><a href="#produtos" className="header__nav-link">Produtos</a></li>
-            <li><a href="#contato" className="header__nav-link">Contato</a></li>
+            <li><a href="/contato" className="header__nav-link">Contato</a></li>
           </ul>
         </nav>
 
