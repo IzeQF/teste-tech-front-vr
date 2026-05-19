@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { renderHook, waitFor, act } from "@testing-library/react";
 import useProducts from "../../hooks/useProducts";
 
 const mockProducts = [
@@ -84,7 +84,9 @@ describe("useProducts", () => {
     const { result } = renderHook(() => useProducts());
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    result.current.setPage(2);
+    act(() => {
+      result.current.setPage(2);
+    });
     await waitFor(() => expect(result.current.loading).toBe(false));
 
     const calls = (global.fetch as jest.Mock).mock.calls;
