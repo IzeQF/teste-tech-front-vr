@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
   const handleCardClick = () => {
-    window.location.href = `/product/${product.id}`;
+    window.location.href = `/produto/${product.id}`;
   };
 
   const handleAddClick = (e: React.MouseEvent) => {
