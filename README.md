@@ -2,6 +2,8 @@
 
 Aplicação de e-commerce desenvolvida como desafio técnico, utilizando arquitetura **Micro Frontend** com **Webpack Module Federation**.
 
+📄 [Ver instruções do desafio](./docs/desafio.pdf)
+
 ---
 
 ## Visão Geral
@@ -64,22 +66,45 @@ Isso sobe os 4 apps simultaneamente. Acesse **http://localhost:3000** para ver a
 
 ---
 
-## Testes
+## Build para produção
 
-Cada app tem sua própria suíte de testes. Para rodar individualmente:
+Na raiz do monorepo, execute:
 
 ```bash
-# CartContext (shell)
-npm test --prefix shell
-
-# ProductCard (cards)
-npm test --prefix cards
-
-# Header (header)
-npm test --prefix header
+npm run build
 ```
 
-**Total: 21 testes, todos passando.**
+Isso gera os artefatos de todos os 4 apps em paralelo. Os arquivos de saída ficam em:
+
+| App | Diretório |
+|-----|-----------|
+| `shell` | `shell/dist/` |
+| `header` | `header/dist/` |
+| `footer` | `footer/dist/` |
+| `cards` | `cards/dist/` |
+
+> Cada app gera seu próprio `remoteEntry.js`. Em produção, ajuste as URLs dos remotes no `webpack.config.js` de cada app para apontar para os hosts corretos antes de buildar.
+
+---
+
+## Testes
+
+Para rodar todos os testes:
+
+```bash
+npm test
+```
+
+Ou individualmente por app:
+
+```bash
+npm test --prefix shell
+npm test --prefix cards
+npm test --prefix header
+npm test --prefix footer
+```
+
+**Total: 69 testes, todos passando.**
 
 ---
 
@@ -87,36 +112,67 @@ npm test --prefix header
 
 ```
 monorepo/
-├── shell/          # App principal — porta 3000
+├── shell/                        # App principal — porta 3000
 │   └── src/
 │       ├── shared/
 │       │   ├── CartContext.tsx   # Contexto global do carrinho
+│       │   ├── cartService.ts    # Serviço de integração com DummyJSON
 │       │   └── types.ts          # Tipos compartilhados (Product, CartItem)
+│       ├── components/
+│       │   ├── Carousel.tsx      # Carrossel reutilizável de produtos
+│       │   └── Hero.tsx
+│       └── pages/
+│           ├── Home.tsx          # Home com 6 carrosséis de produtos
+│           ├── Contact.tsx       # Página de contato com formulário
+│           └── ProductDetail.tsx # Detalhe do produto com galeria e avaliações
+├── header/                       # MFE Header — porta 3001
+├── footer/                       # MFE Footer — porta 3002
+├── cards/                        # MFE Cards — porta 3003
+│   └── src/
+│       ├── hooks/
+│       │   ├── useProducts.ts    # Listagem com paginação e filtros
+│       │   └── useFavorites.ts   # Favoritos com persistência no localStorage
 │       └── components/
-│           └── Hero.tsx
-├── header/         # MFE Header — porta 3001
-├── footer/         # MFE Footer — porta 3002
-├── cards/          # MFE Cards — porta 3003
-├── package.json    # Script raiz com concurrently
-└── DECISIONS.md    # Registro de decisões técnicas
+│           └── ProductCard.tsx
+├── docs/
+│   └── desafio.pdf               # Enunciado do desafio técnico
+└── package.json                  # Scripts raiz com concurrently
 ```
 
 ---
 
 ## Funcionalidades
 
-- **Listagem de produtos** consumida da API [DummyJSON](https://dummyjson.com/products)
-- **Adicionar ao carrinho** com controle de quantidade direto no card
-- **Modal do carrinho** no header com:
+- **Home Page** com 6 carrosséis:
+  - 🔥 Maiores Descontos (top 10 por desconto)
+  - 👗 Moda, 💻 Tecnologia, 🏠 Casa, 💄 Beleza, ⚽ Esportes
+- **Listagem de produtos** com filtro por categoria, ordenação e paginação
+- **Favoritos** com persistência no `localStorage`
+- **Detalhe do produto** com galeria de imagens, avaliações e controle de estoque
+- **Carrinho compartilhado** entre os MFEs via `CartContext`:
   - Controles de quantidade (+/−) por item
   - Confirmação ao remover o último item
   - Total calculado em tempo real
   - Limpar carrinho
-- **Estado compartilhado** entre os MFEs via `CartContext` (padrão singleton em `window`)
+- **Página de Contato** com formulário e estado de sucesso
 - **Responsivo** com menu hamburger em mobile
+
+---
+
+## Rotas
+
+| Rota | Página |
+|------|--------|
+| `/` | Home com carrosséis |
+| `/produtos` | Listagem de produtos (Cards MFE) |
+| `/produto/:id` | Detalhe do produto |
+| `/contato` | Página de contato |
 
 ---
 
 ## Decisões técnicas
 
-Consulte o arquivo [DECISIONS.md](./DECISIONS.md) para o registro completo das decisões de arquitetura, design e progresso das tarefas.
+- **Module Federation** escolhido para permitir deploy independente de cada MFE sem recompilar os demais
+- **CartContext exposto pelo shell** e consumido via `window.__CART_CONTEXT__` para garantir instância única entre os remotes
+- **DummyJSON** usado como API de e-commerce com suporte a carrinho, produtos e categorias
+- **Concurrently** na raiz para simplificar o comando de start/build/test de todos os apps de uma vez
